@@ -4,6 +4,7 @@ const server = http.createServer((req, res) => {
   console.log(req);
   res.setHeader("Content-Type", "text/html");
   res.write("<html><body><h1>hello</h1></body></html>");
+  res.write("<h3>hi</h3>");
   res.end();
 });
 
