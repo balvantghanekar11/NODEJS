@@ -1,13 +1,21 @@
-const http = require("http");
+const path = require("path");
 
-const server = http.createServer((req, res) => {
-  console.log(req);
-  res.setHeader("Content-Type", "text/html");
-  res.write("<html><body><h1>hello</h1></body></html>");
-  res.write("<h3>hi</h3>");
-  res.end();
+// const http = require("http");
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
+
+const adminRoutes = require("./routes/admin");
+const shopRoutes = require("./routes/shop");
+
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/admin", adminRoutes);
+app.use(shopRoutes);
+
+app.use((req, res, next) => {
+  res.status(404).sendFile(__dirname, "views", "404.html");
 });
 
-server.listen(3000, (req, res) => {
+app.listen(3000, (req, res) => {
   console.log("SERVER Started @3000");
 });
